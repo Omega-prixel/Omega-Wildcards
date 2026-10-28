@@ -20,16 +20,22 @@ Dynamic Prompts is powerful but heavy, and it does not load on every current Web
 
 ## Installation
 
-**From the WebUI:** Extensions → Install from URL → paste the URL of this repository → Install. Then Apply and restart.
+**From the WebUI:** Extensions → Install from URL → paste
 
-**Manually:** copy the folder `omega-wildcards` into `extensions/` of your WebUI.
+```
+https://github.com/Omega-prixel/Omega-Wildcards
+```
 
-Put your wildcards into `extensions/omega-wildcards/wildcards/` (or point Settings → Omega Wildcards to an existing folder).
+→ Install. Then Apply and restart.
+
+**Manually:** download the ZIP from [Releases](https://github.com/Omega-prixel/Omega-Wildcards/releases) and copy the folder `omega-wildcards` into `extensions/` of your WebUI.
+
+Put your wildcards into the extension's `wildcards/` folder (`extensions/Omega-Wildcards/wildcards/` when installed from URL) (or point Settings → Omega Wildcards to an existing folder).
 Restart the WebUI and reload the browser page with **Ctrl+F5**.
 
 The console confirms: `[Omega Wildcards] v2.0.0 loaded: … files, … wildcards from …`
 
-**Updating:** installed from URL → Extensions → Check for updates. Installed manually → delete everything in `extensions/omega-wildcards/` **except** `wildcards/`, copy the new version in, restart, Ctrl+F5.
+**Updating:** installed from URL → Extensions → Check for updates. Installed manually → delete everything in the extension folder **except** `wildcards/`, copy the new version in, restart, Ctrl+F5.
 
 > Disable other wildcard extensions (e.g. `stable-diffusion-webui-wildcards`, Dynamic Prompts). Two resolvers on the same prompt get in each other's way.
 
