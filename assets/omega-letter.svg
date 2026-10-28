@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 0 120 150" width="96" height="120" fill="none" stroke="#2f3133">
+  <title>Ω̂</title>
+  <polyline points="47,37 70,15 93,37" stroke-width="12" stroke-linejoin="miter"/>
+  <path d="M24 139 H51 V129.6 A44 44 0 1 1 89 129.6 V139 H116" stroke-width="14" stroke-linejoin="miter"/>
+</svg>

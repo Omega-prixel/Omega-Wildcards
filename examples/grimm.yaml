@@ -1,0 +1,246 @@
+grimm:
+  art:
+    - "gouache"
+    - "watercolor"
+    - "tempera"
+    - "ink-wash"
+    - "oil-on-canvas"
+  artist:
+    - "Arthur Rackham"
+    - "Edmund Dulac"
+    - "Kay Nielsen"
+    - "John Bauer"
+    - "Ivan Bilibin"
+    - "John William Waterhouse"
+    - "Walter Crane"
+    - "Alphonse Mucha"
+  mood:
+    - "melancholic"
+    - "enchanted"
+    - "eerie"
+    - "serene"
+    - "somber"
+    - "wistful"
+  style:
+    - "__grimm/art__ folktale illustration, __grimm/artist__ style, __grimm/mood__ folktale atmosphere, thigh-up portrait shot"
+
+  rapunzel:
+    figure:
+      - "(Hedda, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "{loose|braided} floor-length bright hair"
+    skin:
+      - "dense freckles"
+    clothing:
+      - "{laced linen|smocked cotton} bodice, {puffed|bell} sleeve, {gathered|tiered} ankle-length skirt, {embroidered|scalloped} hem, {shawl|short cape} of fine wool"
+    accessory:
+      - "single wildflower in the hair"
+    setting:
+      - "outdoors, desolate wilderness scape, heather slope, amber dusk"
+      - "outdoors, dense forest scape, mossy clearing, amber dusk"
+      - "indoors, vaulted chamber, seated on a carved stool, at the arched window, amber dusk"
+    prompt:
+      - "__grimm/style__, __grimm/rapunzel/figure__, __grimm/rapunzel/hair__, __grimm/rapunzel/skin__, __grimm/rapunzel/clothing__, __grimm/rapunzel/accessory__, poised posture, __grimm/rapunzel/setting__, floor-length bright hair, amber dusk, bright fair German complexion."
+
+  aschenputtel:
+    figure:
+      - "(Elske, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "{loose|tied-up} shoulder-length bright hair"
+    skin:
+      - "scattered freckles"
+    clothing:
+      - "ash-dusted cheeks, coarse {linen|wool} bodice, rolled sleeve, {gathered|patched} work skirt, {frayed|patched} apron"
+      - "{silk|brocade} ball gown, {embroidered|beaded} bodice, {puffed|bell} sleeve, {full|tiered} ankle-length skirt"
+    accessory:
+      - "single sprouting twig"
+    setting:
+      - "outdoors, grove scape, young tree on a mossy mound, amber dusk"
+      - "indoors, stone kitchen interior, seated on a wooden bench, at the ash heap, amber dusk"
+    prompt:
+      - "__grimm/style__, __grimm/aschenputtel/figure__, __grimm/aschenputtel/hair__, __grimm/aschenputtel/skin__, __grimm/aschenputtel/clothing__, __grimm/aschenputtel/accessory__, poised posture, __grimm/aschenputtel/setting__, amber dusk, bright fair German complexion."
+
+  schneewittchen:
+    figure:
+      - "(Wiebke, German female:1.2), bright fair skin, natural pale German complexion, black hair, dark eyes"
+    hair:
+      - "{loose|tied-up} long black hair"
+    skin:
+      - "red lips"
+    clothing:
+      - "{velvet|brocade} bodice, {embroidered|laced} stomacher, {puffed|slashed} sleeve, {full|pleated} ankle-length skirt, {stand-up|lace} collar"
+    accessory:
+      - "single apple"
+    setting:
+      - "outdoors, snow-covered forest scape, mossy clearing, winter dusk"
+      - "outdoors, snow-covered mountain scape, rocky ridge, winter dusk"
+      - "indoors, low-beamed room, seated on a small wooden chair, at the long table, winter dusk"
+    prompt:
+      - "__grimm/style__, __grimm/schneewittchen/figure__, __grimm/schneewittchen/hair__, __grimm/schneewittchen/skin__, __grimm/schneewittchen/clothing__, __grimm/schneewittchen/accessory__, poised posture, __grimm/schneewittchen/setting__, long black hair, red lips, winter dusk, bright fair German complexion."
+
+  dornroeschen:
+    figure:
+      - "(Ilse, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "{loose|braided} waist-length bright hair"
+    skin:
+      - "scattered freckles"
+    clothing:
+      - "{silk|brocade} gown, {embroidered|pearl-studded} bodice, {bell|puffed} sleeve, {full|pleated} ankle-length skirt, {lace|stand-up} collar"
+    accessory:
+      - "single spindle"
+    setting:
+      - "outdoors, briar thicket scape, dense thorn tendril, amber dusk"
+      - "indoors, dust-covered chamber, seated on a canopy bed, at the spinning wheel, amber dusk"
+    prompt:
+      - "__grimm/style__, __grimm/dornroeschen/figure__, __grimm/dornroeschen/hair__, __grimm/dornroeschen/skin__, __grimm/dornroeschen/clothing__, __grimm/dornroeschen/accessory__, poised posture, __grimm/dornroeschen/setting__, amber dusk, bright fair German complexion."
+
+  frau_holle:
+    figure:
+      - "(Annemarie, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "{loose|braided} long bright hair"
+    skin:
+      - "dense freckles"
+    clothing:
+      - "{laced|smocked} linen bodice, rolled sleeve, {gathered|tiered} ankle-length skirt, gilded {apron|shawl|overdress}"
+    accessory:
+      - "single spindle"
+    setting:
+      - "outdoors, flowering meadow scape, laden apple tree, bright noon"
+      - "outdoors, snow-covered meadow scape, bare apple tree, bright noon"
+    prompt:
+      - "__grimm/style__, __grimm/frau_holle/figure__, __grimm/frau_holle/hair__, __grimm/frau_holle/skin__, __grimm/frau_holle/clothing__, __grimm/frau_holle/accessory__, poised posture, __grimm/frau_holle/setting__, bright noon, bright fair German complexion."
+
+  rotkaeppchen:
+    figure:
+      - "(Lene, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "{loose|braided} shoulder-length bright hair"
+    skin:
+      - "dense freckles"
+    clothing:
+      - "red velvet cap, {laced|smocked} linen bodice, {puffed|rolled} sleeve, {gathered|tiered} knee-length skirt, {embroidered|frayed} apron, {short cape|shawl} of fine wool"
+    setting:
+      - "outdoors, dense forest scape, mossy path, early morning"
+      - "outdoors, forest scape, flowering clearing, early morning"
+    prompt:
+      - "__grimm/style__, __grimm/rotkaeppchen/figure__, __grimm/rotkaeppchen/hair__, __grimm/rotkaeppchen/skin__, __grimm/rotkaeppchen/clothing__, poised posture, __grimm/rotkaeppchen/setting__, red velvet cap, early morning, bright fair German complexion."
+
+  allerleirauh:
+    figure:
+      - "(Thea, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "{loose|tied-up} long bright hair"
+    skin:
+      - "scattered freckles"
+    clothing:
+      - "soot-smudged cheeks, shaggy patchwork mantle, {hooded|draped} patchwork collar, coarse linen shift"
+      - "{silk|brocade} gown, {embroidered|beaded} bodice, {bell|puffed} sleeve, {full|pleated} ankle-length skirt"
+    accessory:
+      - "single gilded ring"
+    setting:
+      - "outdoors, dense forest scape, hollow tree, deep night"
+      - "indoors, kitchen interior, seated on a wooden bench, at the work table, deep night"
+    prompt:
+      - "__grimm/style__, __grimm/allerleirauh/figure__, __grimm/allerleirauh/hair__, __grimm/allerleirauh/skin__, __grimm/allerleirauh/clothing__, __grimm/allerleirauh/accessory__, poised posture, __grimm/allerleirauh/setting__, deep night, bright fair German complexion."
+
+  gaensemagd:
+    figure:
+      - "(Adelheid, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "loose waist-length bright hair"
+    skin:
+      - "dense freckles"
+    clothing:
+      - "coarse linen bodice, rolled sleeve, {gathered|patched} work skirt, {frayed|patched} apron"
+      - "{silk|brocade} gown, {embroidered|pearl-studded} bodice, {bell|puffed} sleeve, {full|pleated} ankle-length skirt"
+    accessory:
+      - "single carved comb"
+    setting:
+      - "outdoors, open meadow scape, wind-swept grass, early morning"
+      - "outdoors, heath scape, rolling hill, early morning"
+    prompt:
+      - "__grimm/style__, __grimm/gaensemagd/figure__, __grimm/gaensemagd/hair__, __grimm/gaensemagd/skin__, __grimm/gaensemagd/clothing__, __grimm/gaensemagd/accessory__, poised posture, __grimm/gaensemagd/setting__, loose waist-length bright hair, early morning, bright fair German complexion."
+
+  gretel:
+    figure:
+      - "(Grete, German female:1.2), bright fair skin, natural pale German complexion, dark hair, dark eyes"
+    hair:
+      - "{loose|braided} shoulder-length dark hair"
+    skin:
+      - "dense freckles"
+    clothing:
+      - "{coarse linen|patched wool} bodice, rolled sleeve, {gathered|pleated} skirt, {frayed|patched} apron, {shawl|short cape} of coarse wool"
+    accessory:
+      - "single white pebble"
+    setting:
+      - "outdoors, dense forest scape, mossy clearing, grey morning"
+      - "outdoors, deep forest scape, pebble path, grey morning"
+    prompt:
+      - "__grimm/style__, __grimm/gretel/figure__, __grimm/gretel/hair__, __grimm/gretel/skin__, __grimm/gretel/clothing__, __grimm/gretel/accessory__, poised posture, __grimm/gretel/setting__, grey morning, bright fair German complexion."
+
+  jorinde:
+    figure:
+      - "(Jorinde, German female:1.2), bright fair skin, natural pale German complexion, dark hair, dark eyes"
+    hair:
+      - "{loose|braided} waist-length dark hair"
+    skin:
+      - "scattered freckles"
+    clothing:
+      - "{laced|smocked} linen bodice, {bell|puffed} sleeve, {gathered|tiered} ankle-length skirt, {embroidered|scalloped} hem, {shawl|short cape} of fine wool"
+    accessory:
+      - "single red flower with pearl center"
+    setting:
+      - "outdoors, dense forest scape, ancient oak, crimson dusk"
+      - "outdoors, forest scape, flowering slope, crimson dusk"
+    prompt:
+      - "__grimm/style__, __grimm/jorinde/figure__, __grimm/jorinde/hair__, __grimm/jorinde/skin__, __grimm/jorinde/clothing__, __grimm/jorinde/accessory__, poised posture, __grimm/jorinde/setting__, crimson dusk, bright fair German complexion."
+
+  froschkoenig:
+    figure:
+      - "(Klara, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "{loose|braided} long bright hair"
+    skin:
+      - "scattered freckles"
+    clothing:
+      - "{silk|brocade} gown, {embroidered|beaded} bodice, {puffed|bell} sleeve, {full|tiered} ankle-length skirt, {lace|stand-up} collar"
+    accessory:
+      - "single gilded ball"
+    setting:
+      - "outdoors, dark forest scape, old linden tree, midday heat"
+      - "indoors, banquet hall, seated on a carved chair, at the long table, midday heat"
+    prompt:
+      - "__grimm/style__, __grimm/froschkoenig/figure__, __grimm/froschkoenig/hair__, __grimm/froschkoenig/skin__, __grimm/froschkoenig/clothing__, __grimm/froschkoenig/accessory__, poised posture, __grimm/froschkoenig/setting__, single gilded ball, midday heat, bright fair German complexion."
+
+  spindel:
+    figure:
+      - "(Agnes, German female:1.2), bright fair skin, natural pale German complexion, bright hair, bright eyes"
+    hair:
+      - "{loose|braided} long bright hair"
+    skin:
+      - "dense freckles"
+    clothing:
+      - "{coarse linen|fine wool} bodice, rolled sleeve, {gathered|pleated} skirt, {embroidered|frayed} apron, {shawl|short cape} of fine wool"
+    accessory:
+      - "single spindle with gilded thread"
+    setting:
+      - "indoors, low-beamed room, seated on a wooden stool, at the loom, grey morning"
+      - "outdoors, forest edge scape, flowering heath, grey morning"
+    prompt:
+      - "__grimm/style__, __grimm/spindel/figure__, __grimm/spindel/hair__, __grimm/spindel/skin__, __grimm/spindel/clothing__, __grimm/spindel/accessory__, poised posture, __grimm/spindel/setting__, grey morning, bright fair German complexion."
+
+  random:
+    - "__grimm/rapunzel/prompt__"
+    - "__grimm/aschenputtel/prompt__"
+    - "__grimm/schneewittchen/prompt__"
+    - "__grimm/dornroeschen/prompt__"
+    - "__grimm/frau_holle/prompt__"
+    - "__grimm/rotkaeppchen/prompt__"
+    - "__grimm/allerleirauh/prompt__"
+    - "__grimm/gaensemagd/prompt__"
+    - "__grimm/gretel/prompt__"
+    - "__grimm/jorinde/prompt__"
+    - "__grimm/froschkoenig/prompt__"
+    - "__grimm/spindel/prompt__"

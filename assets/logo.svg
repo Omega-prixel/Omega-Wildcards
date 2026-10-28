@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" fill="none" stroke="#2f3133">
+  <title>Ω̂ – AI-assisted</title>
+  <circle cx="100" cy="100" r="99" fill="#ffffff" stroke="none"/>
+  <circle cx="100" cy="100" r="88" stroke-width="12"/>
+  <polyline points="77,55 100,33 123,55" stroke-width="12" stroke-linejoin="miter"/>
+  <path d="M54 157 H81 V147.6 A44 44 0 1 1 119 147.6 V157 H146" stroke-width="14" stroke-linejoin="miter"/>
+</svg>
