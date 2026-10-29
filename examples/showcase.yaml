@@ -1,0 +1,29 @@
+showcase:
+  figure:
+    - "(Amara, Nigerian female:1.2), dark ebony skin, natural dark African-Nigerian complexion, dark hair, dark eyes"
+  hair:
+    - "{box-braided|twisted} waist-length dark hair"
+  skin:
+    - "smooth fine-pored skin"
+  style:
+    - "(John Singer Sargent style oil portrait painting, luminous painterly brushstroke:1.2)"
+    - "(Alphonse Mucha style art nouveau illustration, ornamental linework:1.2)"
+    - "(Gustav Klimt style painting, gilded ornamental pattern:1.2)"
+    - "(cinematic photograph, shallow depth of field, {teal|amber} color grading:1.2)"
+    - "(gouache folktale illustration, traditional 2D shading:1.2)"
+  clothing:
+    - "{ribbed|matte} leotard, {sheer|pleated} wrap skirt, {cropped|fitted} knit cardigan"
+    - "{scoop|halter} neck leotard suit, {chiffon|tulle} layered skirt"
+    - "{structured|draped} linen midi dress, {square|boat} neckline, {pleated|tiered} hem"
+    - "tailored {wool|tweed} blazer, {silk|satin} blouse, {pleated|pencil} knee-length skirt"
+    - "{embroidered|beaded} kaftan dress, {wide|bell} sleeve, ankle-length hem"
+  accessory:
+    - "{hoop|drop} earrings"
+  setting:
+    - "${t={amber dusk|grey morning|bright noon|blue hour}}outdoors, savanna scape, acacia tree, ${t}, savanna scape at ${t}"
+    - "${t={amber dusk|grey morning|bright noon|blue hour}}outdoors, desert dune scape, rippled sand, ${t}, desert dune scape at ${t}"
+    - "${t={amber dusk|grey morning|bright noon|blue hour}}outdoors, mountain meadow scape, wildflower, ${t}, mountain meadow scape at ${t}"
+    - "${t={amber dusk|grey morning|bright noon|blue hour}}outdoors, cliff scape, wind-swept grass, ${t}, cliff scape at ${t}"
+    - "${t={amber dusk|grey morning|bright noon}}indoors, painter's atelier, seated on a velvet stool, at the easel, ${t}, painter's atelier at ${t}"
+  prompt:
+    - "__showcase/style__, knee-up portrait shot, __showcase/figure__, __showcase/hair__, __showcase/skin__, __showcase/clothing__, __showcase/accessory__, poised posture, __showcase/setting__, dark ebony African-Nigerian complexion."

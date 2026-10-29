@@ -2,6 +2,7 @@
 import fnmatch
 import os
 import re
+import shutil
 import time
 
 try:
@@ -16,7 +17,21 @@ VARDEF_RE = re.compile(r"\$\{([A-Za-z0-9_\-]+)=")
 WEIGHT_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)::(.*)$", re.S)
 MULTI_RE = re.compile(r"^\s*(\d+)(?:-(\d+))?\$\$(?:(.*?)\$\$)?(.*)$", re.S)
 EXTS = (".txt", ".yaml", ".yml")
+TRASH = "_trash"
 MAX_DEPTH = 50
+
+
+def tidy(text):
+    """Cleans ', ,', stray spaces and dangling commas left by empty options."""
+    t = re.sub(r"[ \t]+", " ", text or "")
+    t = re.sub(r"\s*,(\s*,)+", ",", t)
+    t = re.sub(r"\s+,", ",", t)
+    t = re.sub(r"\.\s*,", ".", t)
+    t = re.sub(r",(?=\S)", ", ", t)
+    t = re.sub(r"\(\s*,\s*", "(", t)
+    t = re.sub(r",\s*\)", ")", t)
+    t = re.sub(r"^\s*,\s*|\s*,\s*$", "", t)
+    return re.sub(r"[ \t]{2,}", " ", t).strip()
 
 
 def parse_option(s):
@@ -90,6 +105,7 @@ class WildcardStore:
         self.interval = interval
         self._files = {}  # abs path -> (mtime, {key: [(w, text)]}, error)
         self.entries, self.key_files, self._suffix = {}, {}, {}
+        self.short_label, self.label_key = {}, {}
         self.errors = []
         self._last = 0.0
 
@@ -112,7 +128,7 @@ class WildcardStore:
             return changed
         seen = {}
         for root, dirs, files in os.walk(self.directory):
-            dirs[:] = [d for d in dirs if not d.startswith(".")]
+            dirs[:] = [d for d in dirs if not d.startswith(".") and d.lower() != TRASH]
             for name in files:
                 if name.lower().endswith(EXTS):
                     path = os.path.join(root, name)
@@ -178,6 +194,25 @@ class WildcardStore:
         for k in entries:
             suffix.setdefault(k.rsplit("/", 1)[-1], []).append(k)
         self.entries, self.key_files, self._suffix, self.errors = entries, key_files, suffix, errors
+        self._build_labels()
+
+    def _build_labels(self):
+        """Shortest unique name: title first, then only as much path as needed to tell it apart."""
+        short, back = {}, {}
+        for last, keys in self._suffix.items():
+            parts = {k: k.split("/") for k in keys}
+            for k, segs in parts.items():
+                n = 1
+                while n < len(segs):
+                    tail = segs[-n:]
+                    if not any(o != k and parts[o][-n:] == tail for o in keys):
+                        break
+                    n += 1
+                label = segs[-1] if n == 1 else f"{segs[-1]} · {'/'.join(segs[-n:-1])}"
+                if label in back:  # safety net, should not happen
+                    label = f"{segs[-1]} · {'/'.join(segs[:-1])}"
+                short[k], back[label] = label, k
+        self.short_label, self.label_key = short, back
 
     # ---- queries ----
     def lookup(self, name):
@@ -335,6 +370,147 @@ class WildcardStore:
         return results
 
     # ---- check ----
+    # ---- duplicates ----
+    def duplicate_groups(self):
+        """[(label, [rel paths])] – same .txt file name in several folders, or same wildcard name in several files."""
+        groups = {}
+        by_name = {}
+        for path in self._files:
+            if path.lower().endswith(".txt"):
+                by_name.setdefault(os.path.basename(path).lower(), []).append(self.rel(path))
+        for n, rels in by_name.items():
+            if len(rels) > 1:
+                groups[f"{n}  ({len(rels)} files)"] = sorted(rels)
+        for k, fs in self.key_files.items():
+            rels = sorted({self.rel(f) for f in fs})
+            if len(rels) > 1:
+                groups.setdefault(f"__{k}__  ({len(rels)} files)", rels)
+        return sorted(groups.items())
+
+    RULES = ["keep largest", "keep smallest", "keep newest", "keep oldest", "keep shortest path", "keep longest path"]
+
+    def file_info(self, rel):
+        try:
+            st = os.stat(self.abspath(rel))
+            return st.st_size, st.st_mtime
+        except OSError:
+            return 0, 0
+
+    def pick_keep(self, rels, rule):
+        info = {r: self.file_info(r) for r in rels}
+        keyfn = {
+            "keep largest": lambda r: (-info[r][0], r),
+            "keep smallest": lambda r: (info[r][0], r),
+            "keep newest": lambda r: (-info[r][1], r),
+            "keep oldest": lambda r: (info[r][1], r),
+            "keep shortest path": lambda r: (r.count("/"), len(r), r),
+            "keep longest path": lambda r: (-r.count("/"), -len(r), r),
+        }.get(rule, lambda r: (-info[r][0], r))
+        return sorted(rels, key=keyfn)[0]
+
+    def plan_cleanup(self, groups, rule):
+        """[(keep, [to_trash])] for every group made only of .txt files; others are skipped."""
+        plan, taken = [], set()
+        for _, rels in groups:
+            rels = [r for r in rels if os.path.exists(self.abspath(r))]
+            if len(rels) < 2 or not all(r.lower().endswith(".txt") for r in rels):
+                continue
+            keep = self.pick_keep(rels, rule)
+            out = [r for r in rels if r != keep and r not in taken]
+            taken.update(out)
+            if out:
+                plan.append((keep, out))
+        return plan
+
+    def rename(self, rel, new_name):
+        """Renames a wildcard file and rewrites every reference that pointed to it.
+        Returns (new_rel, files_changed, refs_changed, pooled_refs)."""
+        new_name = (new_name or "").strip().replace("\\", "/").strip("/")
+        if not new_name:
+            raise ValueError("enter a new name")
+        ext = os.path.splitext(rel)[1]
+        new_rel = new_name if "/" in new_name else "/".join(p for p in [os.path.dirname(rel), new_name] if p)
+        if not new_rel.lower().endswith(ext.lower()):
+            new_rel += ext
+        src, dst = self.abspath(rel), self.abspath(new_rel)
+        if not os.path.exists(src):
+            raise ValueError(f"{rel} does not exist")
+        if os.path.exists(dst) and os.path.normcase(src) != os.path.normcase(dst):
+            raise ValueError(f"{new_rel} already exists")
+        is_txt = ext.lower() == ".txt"
+        if not is_txt and os.path.dirname(rel) != os.path.dirname(new_rel):
+            raise ValueError("YAML files can only be renamed inside their folder "
+                             "(their wildcard names come from folders and keys, not the file name)")
+        files_changed = refs_changed = pooled = 0
+        if is_txt:
+            old_key = os.path.splitext(rel)[0].lower()
+            new_ref = os.path.splitext(new_rel)[0]
+            for path in list(self._files):
+                with open(path, encoding="utf8", errors="replace") as f:
+                    raw = f.read()
+                count = [0]
+
+                def sub(m):
+                    name = m.group(1)
+                    if "*" in name:
+                        return m.group(0)
+                    keys = self.keys_for(name)
+                    if keys == [old_key]:
+                        count[0] += 1
+                        return f"__{new_ref}__"
+                    return m.group(0)
+
+                new_raw = WILDCARD_RE.sub(sub, raw)
+                for m in WILDCARD_RE.finditer(raw):
+                    keys = self.keys_for(m.group(1))
+                    if old_key in keys and len(keys) > 1:
+                        pooled += 1
+                if count[0]:
+                    with open(path, "w", encoding="utf8") as f:
+                        f.write(new_raw)
+                    files_changed += 1
+                    refs_changed += count[0]
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        os.replace(src, dst)
+        log = os.path.join(self.directory, TRASH, "rename_log.csv")
+        os.makedirs(os.path.dirname(log), exist_ok=True)
+        new_log = not os.path.exists(log)
+        with open(log, "a", encoding="utf8") as f:
+            if new_log:
+                f.write("time,old,new,references_rewritten\n")
+            f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')},{rel},{new_rel},{refs_changed}\n")
+        self.refresh(force=True)
+        return new_rel, files_changed, refs_changed, pooled
+
+    def trash(self, rel):
+        """Moves a file into _trash (same sub-path), never deletes."""
+        src = self.abspath(rel)
+        dst = os.path.join(self.directory, TRASH, rel)
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        if os.path.exists(dst):
+            base, ext = os.path.splitext(dst)
+            dst = f"{base}.{int(time.time())}{ext}"
+        shutil.move(src, dst)
+        return dst
+
+    def merge_txt(self, rels):
+        """Merges all .txt files into the first (unique lines, order kept), moves the rest to _trash."""
+        if len(rels) < 2 or not all(r.lower().endswith(".txt") for r in rels):
+            raise ValueError("merging works for .txt files only")
+        seen, lines = set(), []
+        for rel in rels:
+            with open(self.abspath(rel), encoding="utf8", errors="replace") as f:
+                for line in f.read().splitlines():
+                    key = line.strip()
+                    if key and key not in seen:
+                        seen.add(key)
+                        lines.append(line.rstrip())
+        with open(self.abspath(rels[0]), "w", encoding="utf8") as f:
+            f.write("\n".join(lines) + "\n")
+        for rel in rels[1:]:
+            self.trash(rel)
+        return len(lines)
+
     def diagnose(self):
         """Returns {category: [(label, search_term)]}; search_term targets the file search."""
         out = {"errors": [], "missing": [], "empty_refs": [], "empty": [], "dup_keys": [], "dup_names": []}
